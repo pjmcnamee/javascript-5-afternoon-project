@@ -23,13 +23,14 @@ function outer() {
 */
   
 // Code Here
+let inner = outer()
 
 
 
 //Once you do that, invoke inner.
 
 //Code Here
-
+inner()
 
 
 ////////// PROBLEM 2 //////////
@@ -52,7 +53,8 @@ function callFriend(name) {
 */
 
 //Code Here
-
+let callJake = callFriend('Jake')
+callJake('435-555-9248')
 
 
 ////////// PROBLEM 3 //////////
@@ -62,15 +64,22 @@ function callFriend(name) {
 */
 
 //Code Here
-
+function makeCounter(){
+  let num = 0
+  function inner(){
+    num++
+    return num
+  }
+  return inner
+}
 
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -86,18 +95,26 @@ function callFriend(name) {
 */
 
 function counterFactory(value) {
-  // Code here.
+  let start = value
 
   return {
+    inc: function(){
+      start++
+      return start
+    },
+    dec: function(){
+      start--
+      return start
+    }
 
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -113,9 +130,14 @@ function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
+  function inner() {
+
+    let newText = `${welcomeText} ${firstname} ${lastname}.`
+    return newText;
+  }
 
   //Uncommment this to return the value of your message function
-  //return message;
+  return inner
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -133,7 +155,7 @@ var module = (function() {
   var person = {
     name: "phillip",
     age: 29,
-    location: "Utah"
+    location: "Utah",
   };
 
   function privateMethod(){
@@ -144,6 +166,10 @@ var module = (function() {
   // outside our lexical scope
   return {
     // Code here.
+    publicMethod: function(){
+      let result = privateMethod()
+      return result
+    }
   };
 })();
 
@@ -162,7 +188,14 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+    addToSecret: function(num){
+      secret += num
+      return secret
+    },
+    takeAwayFromSecret: function(num){
+      secret -=num
+      return secret
+    }
   };
 }
 
@@ -187,10 +220,14 @@ function secretNumber() {
 */
 
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
+  function random(data){
     setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+      console.log(data);
+    }, data * 1000);
+  }
+ 
+  for (var i = 0; i <= 5; i++) {
+    random(i)
   }
 }
 timeOutCounter();
